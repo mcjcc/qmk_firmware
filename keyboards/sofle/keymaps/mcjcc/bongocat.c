@@ -124,5 +124,12 @@ bool oled_task_user(void) {
      return false;
 }
 
-oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_180; };
+oled_rotation_t oled_init_user(oled_rotation_t rotation) { 
+    if (is_keyboard_master()) {
+        return rotation;
+    }
+    return OLED_ROTATION_180; 
+};
+
+
 #endif
