@@ -47,6 +47,6 @@ for more options.
 #define NO_ACTION_FUNCTION // 0
 #define DISABLE_LEADER     // 0
 
-// #define OLED_FONT_H "./keymaps/mcjcc/glcdfont.c"
+#define OLED_FONT_H "./keymaps/mcjcc/glcdfont.c"
 
 #define UNICODE_SELECTED_MODES UC_WINC
