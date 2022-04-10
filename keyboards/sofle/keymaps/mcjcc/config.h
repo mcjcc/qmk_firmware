@@ -25,19 +25,23 @@ for more options.
 // More lighting options in quantum/rgblight/rgblight.h
 #ifdef RGBLIGHT_ENABLE
 // #define RGBLIGHT_DEFAULT_MODE RGBLIGHT_MODE_RAINBOW_SWIRL+2
+
+// When flashed, this is the color that it defaults to
 #define RGBLIGHT_DEFAULT_HUE 187
 #define RGBLIGHT_DEFAULT_SAT 80
 #define RGBLIGHT_DEFAULT_VAL 87
+
+
 // Disabling some of these is a good way to save flash space.
-// #    define RGBLIGHT_EFFECT_ALTERNATING     // 108
-// #    define RGBLIGHT_EFFECT_RGB_TEST        // 158
-// #    define RGBLIGHT_EFFECT_RAINBOW_MOOD    // 160
-// #    define RGBLIGHT_EFFECT_STATIC_GRADIENT // 168
-// #    define RGBLIGHT_EFFECT_RAINBOW_SWIRL   // 192
-// #    define RGBLIGHT_EFFECT_BREATHING       // 348
-// #    define RGBLIGHT_EFFECT_KNIGHT          // 336
-// #    define RGBLIGHT_EFFECT_SNAKE           // 406
-// #    define RGBLIGHT_EFFECT_CHRISTMAS       // 508
+#undef RGBLIGHT_EFFECT_ALTERNATING     // 108
+#undef RGBLIGHT_EFFECT_RGB_TEST        // 158
+#undef RGBLIGHT_EFFECT_RAINBOW_MOOD    // 160
+#undef RGBLIGHT_EFFECT_STATIC_GRADIENT // 168
+#undef RGBLIGHT_EFFECT_RAINBOW_SWIRL   // 192
+#undef RGBLIGHT_EFFECT_BREATHING       // 348
+#undef RGBLIGHT_EFFECT_KNIGHT          // 336
+#undef  RGBLIGHT_EFFECT_SNAKE           // 406
+#undef RGBLIGHT_EFFECT_CHRISTMAS       // 508
 /*
 #define RGBLIGHT_EFFECT_TWINKLE         // 1156
 */
@@ -52,3 +56,14 @@ for more options.
 #define OLED_FONT_H "./keymaps/mcjcc/glcdfont.c"
 
 #define UNICODE_SELECTED_MODES UC_WINC
+
+// More saving space stuff
+#undef LOCKING_SUPPORT_ENABLE
+#undef LOCKING_RESYNC_ENABLE
+#undef SPLIT_WPM_ENABLE
+#define NO_MUSIC_MODE
+#define LAYER_STATE_8BIT
+
+// OLED settings
+#define SPLIT_LAYER_STATE_ENABLE
+#define SPLIT_LED_STATE_ENABLE
