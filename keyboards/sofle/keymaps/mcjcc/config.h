@@ -26,11 +26,17 @@ for more options.
 #ifdef RGBLIGHT_ENABLE
 // #define RGBLIGHT_DEFAULT_MODE RGBLIGHT_MODE_RAINBOW_SWIRL+2
 
-// When flashed, this is the color that it defaults to
-#define RGBLIGHT_DEFAULT_HUE 187
-#define RGBLIGHT_DEFAULT_SAT 80
-#define RGBLIGHT_DEFAULT_VAL 87
+// When flashed, this is the color that it defaults to (purplish)
+#define RGBLIGHT_DEFAULT_HUE 203 // about 264 degrees HSV
+#define RGBLIGHT_DEFAULT_SAT 191 // about 75% HSV
+#define RGBLIGHT_DEFAULT_VAL RGBLIGHT_LIMIT_VAL // 150 and about 58% HSV
+#define RGBLIGHT_LAYERS_RETAIN_VAL
 
+// colors
+#define hsv_PURP               RGBLIGHT_DEFAULT_HUE, RGBLIGHT_DEFAULT_SAT, RGBLIGHT_DEFAULT_VAL
+#define hsv_RED                 0, 230, RGBLIGHT_DEFAULT_VAL
+#define hsv_GREEN              92, 191, RGBLIGHT_DEFAULT_VAL
+#define hsv_ORANGE             24, 255, RGBLIGHT_DEFAULT_VAL
 
 // Disabling some of these is a good way to save flash space.
 #undef RGBLIGHT_EFFECT_ALTERNATING     // 108
@@ -40,11 +46,9 @@ for more options.
 #undef RGBLIGHT_EFFECT_RAINBOW_SWIRL   // 192
 #undef RGBLIGHT_EFFECT_BREATHING       // 348
 #undef RGBLIGHT_EFFECT_KNIGHT          // 336
-#undef  RGBLIGHT_EFFECT_SNAKE           // 406
+#undef RGBLIGHT_EFFECT_SNAKE           // 406
 #undef RGBLIGHT_EFFECT_CHRISTMAS       // 508
-/*
-#define RGBLIGHT_EFFECT_TWINKLE         // 1156
-*/
+#undef RGBLIGHT_EFFECT_TWINKLE         // 1156
 #endif
 
 // Disabled to save space
@@ -64,6 +68,10 @@ for more options.
 #define NO_MUSIC_MODE
 #define LAYER_STATE_8BIT
 
-// OLED settings
+// syncing keyboard settings
 #define SPLIT_LAYER_STATE_ENABLE
 #define SPLIT_LED_STATE_ENABLE
+
+#define COMBO_TERM 40
+#define COMBO_STRICT_TIMER
+// #define COMBO_MUST_PRESS_IN_ORDER

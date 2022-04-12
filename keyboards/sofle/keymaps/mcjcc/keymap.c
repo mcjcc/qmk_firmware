@@ -45,24 +45,27 @@ enum combo_events {
     R_SQ_BRACK,
     EQUAL,
     PLUS,
-    AND,
-    OR,
+    AMP,
+    PIPE,
     CAPS,
+    BSPC_LSFT_CLEAR,
     COMBO_LENGTH
 };
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
-const uint16_t PROGMEM left_paren[] = {KC_P, KC_L, COMBO_END};
-const uint16_t PROGMEM right_paren[] = {KC_P, KC_R, COMBO_END};
-const uint16_t PROGMEM left_curly[] = {KC_C, KC_L, COMBO_END};
-const uint16_t PROGMEM right_curly[] = {KC_C, KC_R, COMBO_END};
-const uint16_t PROGMEM left_square_brack[] = {KC_S, KC_L, COMBO_END};
-const uint16_t PROGMEM right_square_brack[] = {KC_S, KC_R, COMBO_END};
+const uint16_t PROGMEM left_paren[] = {KC_L, KC_P, COMBO_END};
+const uint16_t PROGMEM right_paren[] = {KC_R, KC_P, COMBO_END};
+const uint16_t PROGMEM left_curly[] = {KC_L, KC_C, COMBO_END};
+const uint16_t PROGMEM right_curly[] = {KC_R, KC_C, COMBO_END};
+const uint16_t PROGMEM left_square_brack[] = {KC_L, KC_S, COMBO_END};
+const uint16_t PROGMEM right_square_brack[] = {KC_R, KC_S, COMBO_END};
 const uint16_t PROGMEM equal[] = {KC_E, KC_Q, COMBO_END};
 const uint16_t PROGMEM plus[] = {KC_P, KC_L, KC_S, COMBO_END};
-const uint16_t PROGMEM and[] = {KC_A, KC_N, KC_D, COMBO_END};
-const uint16_t PROGMEM or[] = {KC_O, KC_R, COMBO_END};
+const uint16_t PROGMEM amp[] = {KC_A, KC_M, KC_P, COMBO_END};
+const uint16_t PROGMEM pipe[] = {KC_O, KC_R, COMBO_END};
 const uint16_t PROGMEM caps[] = {KC_C, KC_A, KC_P, COMBO_END};
+const uint16_t PROGMEM clear_line_combo[] = {KC_BSPC, KC_LSFT, COMBO_END};
+
 
 combo_t key_combos[] = {
     [L_PAREN] = COMBO(left_paren, KC_LPRN),
@@ -73,12 +76,33 @@ combo_t key_combos[] = {
     [R_SQ_BRACK] = COMBO(right_square_brack, KC_RBRC),
     [EQUAL] = COMBO(equal, KC_EQL),
     [PLUS] = COMBO(plus, KC_PLUS),
-    [AND] = COMBO(and, KC_AMPR),
-    [OR] = COMBO(or, KC_PIPE),
-    [CAPS] = COMBO(caps, KC_CAPS)
+    [AMP] = COMBO(amp, KC_AMPR),
+    [PIPE] = COMBO(pipe, KC_PIPE),
+    [CAPS] = COMBO(caps, KC_CAPS),
+    [BSPC_LSFT_CLEAR] = COMBO_ACTION(clear_line_combo)
 };
 /* COMBO_ACTION(x) is same as COMBO(x, KC_NO) */
 
+void process_combo_event(uint16_t combo_index, bool pressed) {
+    switch(combo_index) {
+        case BSPC_LSFT_CLEAR:
+            if (pressed) {
+                tap_code16(KC_END);
+                tap_code16(KC_HOME);
+                tap_code16(KC_BSPC);
+            }
+            break;
+    }
+}
+
+uint16_t get_combo_term(uint16_t combo_index, combo_t *combo) {
+    switch(combo_index) {
+        case L_PAREN:
+            return 30;
+    }
+
+    return COMBO_TERM;
+}
 
 // Extra keys are added for rotary encoder support in VIA
 #define LAYOUT_via( \
@@ -189,11 +213,11 @@ KC_LSFT, KC_Z  , KC_X   , KC_C   , KC_V   , KC_B   , KC_VOLD,       KC_PGDN, KC_
  *            `----------------------------------'             '------''---------------------------'
  */
 [_LOWER] = LAYOUT_via(
-    CYCLE, _______, _______, _______, _______ , _______,                       _______, KC_7   , KC_8   , KC_9   , _______ , _______,
-  _______, KC_INS , KC_PSCR, KC_APP , XXXXXXX , XXXXXXX, _______,    _______,  KC_PGUP, KC_4   , KC_5   , KC_6   , KC_EQL  , _______,
-  _______, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX , KC_CAPS, _______,    _______,  KC_PGDN, KC_1   , KC_2   , KC_3   , _______ , _______,
-  _______, KC_UNDO, KC_CUT , KC_COPY, XXXXXXX, KC_PASTE, _______,    _______,  KC_LBRC, KC_0   , _______, _______, _______ , _______,
-                   _______, _______, _______, _______, _______,        _______, _______, _______, _______, _______
+    CYCLE, _______, _______, _______, _______ , _______,                       _______, _______, KC_PSLS, KC_PAST , KC_PMNS , _______,
+  _______, KC_INS , KC_PSCR, KC_APP , XXXXXXX , XXXXXXX, _______,    RGB_VAI,  KC_PGUP, KC_7   , KC_8   , KC_9    , KC_PPLS , KC_DEL ,
+  _______, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX , KC_CAPS, _______,    RGB_TOG,  KC_PGDN, KC_4   , KC_5   , KC_6    , KC_EQL  , _______,
+  _______, KC_UNDO, KC_CUT , KC_COPY, XXXXXXX, KC_PASTE, _______,    RGB_VAD,  KC_LBRC, KC_1   , KC_2   , KC_3    , _______ , _______,
+                   _______, _______, _______, _______, _______,        _______, _______, KC_0, _______, _______
 ),
 
 /* RAISE
@@ -211,10 +235,10 @@ KC_LSFT, KC_Z  , KC_X   , KC_C   , KC_V   , KC_B   , KC_VOLD,       KC_PGDN, KC_
  *            `-----------------------------------'            '------''---------------------------'
  */
 [_RAISE] = LAYOUT_via(
-  _______, KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  ,                         KC_F8  , KC_F9  , KC_F10  , KC_F11  , KC_F12 , _______ ,
-  _______, KC_1   , KC_2   , KC_UP  , KC_4   , KC_5   , _______,       _______, KC_6   , KC_7   , KC_8    , KC_9    , KC_0   , _______ ,
-  _______, KC_EXLM, KC_LEFT, KC_DOWN, KC_RGHT, KC_PERC, _______,       _______, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PIPE,
-  _______, KC_EQL , KC_MINS, KC_PLUS, KC_LCBR, KC_RCBR, _______,       _______, KC_LBRC, KC_RBRC, KC_SCLN, KC_COLN, KC_BSLS, _______,
+  _______, KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  ,                         KC_F8  , KC_F9  , KC_F10  , KC_F11  , KC_F12 , _______,
+  _______, KC_1   , KC_2   , KC_UP  , KC_4   , KC_5   , _______,       _______, KC_6   , KC_7   , KC_8    , KC_9    , KC_0   , _______,
+  _______, KC_EXLM, KC_LEFT, KC_DOWN, KC_RGHT, KC_PERC, _______,       _______, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN  , KC_PIPE,
+  _______, KC_EQL , KC_MINS, KC_PLUS, KC_LCBR, KC_RCBR, _______,       _______, KC_LBRC, KC_RBRC, KC_SCLN, KC_COLN, KC_BSLS  , _______,
                   _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______
 )
 };
@@ -235,3 +259,79 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // this uses less memory than returning in each case.
     return keycode < SAFE_RANGE;
 };
+
+#ifdef SPLIT_KEYBOARD
+void housekeeping_task_user(void) {
+    static uint32_t last_sync = 0;
+    static layer_state_t old_layer_state = 0;
+    if (timer_elapsed32(last_sync) > 500 && (!is_keyboard_master() && old_layer_state != layer_state)) {
+        old_layer_state = layer_state;
+        layer_state_set_user(layer_state);
+    }
+}
+#endif
+
+#ifdef RGBLIGHT_ENABLE
+
+static uint8_t left_leds[] = {4, 16, 28, 1, 13, 25, 10};
+static uint8_t right_leds[] = {45, 57, 69, 48, 60, 72, 63};
+
+static uint8_t left_thumb_led = 36;
+static uint8_t right_thumb_led = 37;
+
+static led_t led_state;
+
+void apply(uint8_t *arr, size_t len, uint8_t hue, uint8_t sat, uint8_t val, void (*fnPtr)(uint8_t, uint8_t, uint8_t, uint8_t)) {
+     for(size_t i = 0; i < len; ++i) {
+        fnPtr(hue, sat, val, arr[i]);
+     }             
+};
+
+#define ARRAY_SIZE(a) (sizeof(a)/sizeof((a)[0]))
+
+
+void update_led(void) {
+    HSV layer_color = rgblight_get_hsv();
+    HSV indicator_color = layer_color;
+
+    switch(get_highest_layer(layer_state)) {
+        case _LOWER:
+            layer_color = (HSV){hsv_RED};
+            break;
+        case _RAISE:
+            layer_color = (HSV){hsv_GREEN};
+            break;
+        default:
+            layer_color = (HSV){hsv_PURP};
+            break;
+    }
+    indicator_color = (led_state.caps_lock) ? (HSV){hsv_ORANGE} : layer_color;
+
+    uint8_t lh = layer_color.h;
+    uint8_t ls = layer_color.s;
+    uint8_t lv = layer_color.v;
+
+    uint8_t ih = indicator_color.h;
+    uint8_t is = indicator_color.s;
+    uint8_t iv = indicator_color.v; 
+
+    apply(right_leds, ARRAY_SIZE(right_leds), lh, ls, lv, rgblight_sethsv_at);
+    apply(left_leds, ARRAY_SIZE(left_leds), lh, ls, lv, rgblight_sethsv_at);
+
+    // set caps lock indicator colors
+    rgblight_sethsv_range(ih, is, iv, left_thumb_led, right_thumb_led+1);
+}
+
+layer_state_t layer_state_set_user(layer_state_t layer_state) {
+    update_led();
+    return layer_state;
+}
+
+bool led_update_user(led_t state) {
+    led_state = state;
+    update_led();
+    return true;
+}
+
+
+#endif
