@@ -36,7 +36,7 @@ for more options.
 #define hsv_PURP               RGBLIGHT_DEFAULT_HUE, RGBLIGHT_DEFAULT_SAT, RGBLIGHT_DEFAULT_VAL
 #define hsv_RED                 0, 230, RGBLIGHT_DEFAULT_VAL
 #define hsv_GREEN              92, 191, RGBLIGHT_DEFAULT_VAL
-#define hsv_ORANGE             24, 255, RGBLIGHT_DEFAULT_VAL
+#define hsv_ORANGE             16, 255, RGBLIGHT_DEFAULT_VAL
 
 // Disabling some of these is a good way to save flash space.
 #undef RGBLIGHT_EFFECT_ALTERNATING     // 108
