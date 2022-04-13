@@ -27,16 +27,18 @@ for more options.
 // #define RGBLIGHT_DEFAULT_MODE RGBLIGHT_MODE_RAINBOW_SWIRL+2
 
 // When flashed, this is the color that it defaults to (purplish)
-#define RGBLIGHT_DEFAULT_HUE 203 // about 264 degrees HSV
-#define RGBLIGHT_DEFAULT_SAT 191 // about 75% HSV
-#define RGBLIGHT_DEFAULT_VAL RGBLIGHT_LIMIT_VAL // 150 and about 58% HSV
+#define RGBLIGHT_DEFAULT_HUE 200 // about 264 degrees hue
+#define RGBLIGHT_DEFAULT_SAT 191 // about 75% saturation
+#define RGBLIGHT_DEFAULT_VAL RGBLIGHT_LIMIT_VAL // 150 and about 58% value
 #define RGBLIGHT_LAYERS_RETAIN_VAL
 
 // colors
-#define hsv_PURP               RGBLIGHT_DEFAULT_HUE, RGBLIGHT_DEFAULT_SAT, RGBLIGHT_DEFAULT_VAL
-#define hsv_RED                 0, 230, RGBLIGHT_DEFAULT_VAL
-#define hsv_GREEN              92, 191, RGBLIGHT_DEFAULT_VAL
+#define hsv_PURP              200, 191, RGBLIGHT_DEFAULT_VAL
+#define hsv_RED                 0, 220, RGBLIGHT_DEFAULT_VAL
+#define hsv_GREEN              96, 181, RGBLIGHT_DEFAULT_VAL
 #define hsv_ORANGE             16, 255, RGBLIGHT_DEFAULT_VAL
+#define hsv_GOLD               40, 230, RGBLIGHT_DEFAULT_VAL
+
 
 // Disabling some of these is a good way to save flash space.
 #undef RGBLIGHT_EFFECT_ALTERNATING     // 108
@@ -64,7 +66,7 @@ for more options.
 // More saving space stuff
 #undef LOCKING_SUPPORT_ENABLE
 #undef LOCKING_RESYNC_ENABLE
-#undef SPLIT_WPM_ENABLE
+#define SPLIT_WPM_ENABLE
 #define NO_MUSIC_MODE
 #define LAYER_STATE_8BIT
 
@@ -75,3 +77,6 @@ for more options.
 #define COMBO_TERM 40
 #define COMBO_STRICT_TIMER
 // #define COMBO_MUST_PRESS_IN_ORDER
+
+// #define OLED_FONT_WIDTH    6
+// #define OLED_FONT_HEIGHT   8

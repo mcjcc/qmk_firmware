@@ -17,7 +17,6 @@
 
 #include QMK_KEYBOARD_H
 
-// #include "bongocat.c"
 #include "oled.c"
 #include "encoder.c"
 
@@ -87,8 +86,8 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     switch(combo_index) {
         case BSPC_LSFT_CLEAR:
             if (pressed) {
-                tap_code16(KC_END);
-                tap_code16(S(KC_HOME));
+                tap_code16(LGUI(KC_RGHT));
+                tap_code16(S(LGUI(KC_LEFT)));
                 tap_code16(KC_BSPC);
             }
             break;
@@ -99,6 +98,8 @@ uint16_t get_combo_term(uint16_t combo_index, combo_t *combo) {
     switch(combo_index) {
         case L_PAREN:
             return 30;
+        case BSPC_LSFT_CLEAR:
+            return 1000;
     }
 
     return COMBO_TERM;
@@ -215,7 +216,7 @@ KC_LSFT, KC_Z  , KC_X   , KC_C   , KC_V   , KC_B   , KC_VOLD,       KC_PGDN, KC_
 [_LOWER] = LAYOUT_via(
     CYCLE, _______, _______, _______, _______ , _______,                       _______, _______, KC_PSLS, KC_PAST , KC_PMNS , _______,
   _______, KC_INS , KC_PSCR, KC_APP , XXXXXXX , XXXXXXX, _______,    RGB_VAI,  KC_PGUP, KC_7   , KC_8   , KC_9    , KC_PPLS , KC_DEL ,
-  _______, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX , KC_CAPS, _______,    RGB_TOG,  KC_PGDN, KC_4   , KC_5   , KC_6    , KC_EQL  , _______,
+  _______, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX , KC_CAPS, DEBUG  ,    RGB_TOG,  KC_PGDN, KC_4   , KC_5   , KC_6    , KC_EQL  , _______,
   _______, KC_UNDO, KC_CUT , KC_COPY, XXXXXXX, KC_PASTE, _______,    RGB_VAD,  KC_LBRC, KC_1   , KC_2   , KC_3    , _______ , _______,
                    _______, _______, _______, _______, _______,        _______, _______, KC_0, _______, _______
 ),
@@ -265,6 +266,9 @@ void housekeeping_task_user(void) {
     static uint32_t last_sync = 0;
     static layer_state_t old_layer_state = 0;
     if (timer_elapsed32(last_sync) > 500 && (!is_keyboard_master() && old_layer_state != layer_state)) {
+       #ifdef CONSOLE_ENABLE
+       print("house_keeping_task_user fired!\n");
+       #endif
         old_layer_state = layer_state;
         layer_state_set_user(layer_state);
     }
@@ -273,15 +277,20 @@ void housekeeping_task_user(void) {
 
 #ifdef RGBLIGHT_ENABLE
 
-static uint8_t left_leds[] = {4, 16, 28, 1, 13, 25, 10};
-static uint8_t right_leds[] = {45, 57, 69, 48, 60, 72, 63};
+// per key LEDs
+// static uint8_t left_leds_sm[][2] = {{0, 3}, {5, 9}, {11, 12}, {14, 15}, {17, 24}, {26, 27}, {29, 35}};
+// static uint8_t right_leds_sm[][2] = {{38, 44}, {46, 47}, {49, 56}, {58, 59}, {61, 62}, {64, 68}, {70, 73}};
+
+// underglow LEDS
+static uint8_t left_leds_underglow[] = {4, 16, 28, 1, 13, 25, 10};
+static uint8_t right_leds_underglow[] = {45, 57, 69, 48, 60, 72, 63};
 
 static uint8_t left_thumb_led = 36;
 static uint8_t right_thumb_led = 37;
 
 static led_t led_state;
 
-void apply(uint8_t *arr, size_t len, uint8_t hue, uint8_t sat, uint8_t val, void (*fnPtr)(uint8_t, uint8_t, uint8_t, uint8_t)) {
+void apply_underglow(uint8_t *arr, size_t len, uint8_t hue, uint8_t sat, uint8_t val, void (*fnPtr)(uint8_t, uint8_t, uint8_t, uint8_t)) {
      for(size_t i = 0; i < len; ++i) {
         fnPtr(hue, sat, val, arr[i]);
      }             
@@ -315,8 +324,8 @@ void update_led(void) {
     uint8_t is = indicator_color.s;
     uint8_t iv = indicator_color.v; 
 
-    apply(right_leds, ARRAY_SIZE(right_leds), lh, ls, lv, rgblight_sethsv_at);
-    apply(left_leds, ARRAY_SIZE(left_leds), lh, ls, lv, rgblight_sethsv_at);
+    apply_underglow(right_leds_underglow, ARRAY_SIZE(right_leds_underglow), lh, ls, lv, rgblight_sethsv_at);
+    apply_underglow(left_leds_underglow, ARRAY_SIZE(left_leds_underglow), lh, ls, lv, rgblight_sethsv_at);
 
     // set caps lock indicator colors
     rgblight_sethsv_range(ih, is, iv, left_thumb_led, right_thumb_led+1);
@@ -332,6 +341,18 @@ bool led_update_user(led_t state) {
     update_led();
     return true;
 }
+
+// void keyboard_post_init_user() {
+    // for (size_t i = 0; i < ARRAY_SIZE(left_leds_sm); ++i) {
+    //     rgblight_sethsv_range(hsv_GOLD, left_leds_sm[i][0], left_leds_sm[i][1]+1);
+    //     rgblight_sethsv_range(hsv_GOLD, right_leds_sm[i][0], right_leds_sm[i][1]+1);
+    // }
+
+    // apply_underglow(right_leds_underglow, ARRAY_SIZE(right_leds_underglow), hsv_PURP, rgblight_sethsv_at);
+    // apply_underglow(left_leds_underglow, ARRAY_SIZE(left_leds_underglow), hsv_PURP, rgblight_sethsv_at);
+    // rgblight_sethsv_range(hsv_PURP, left_thumb_led, right_thumb_led+1);
+
+// }
 
 
 #endif

@@ -18,6 +18,10 @@
 //Sets up what the OLED screens display.
 
 #ifdef OLED_ENABLE
+// #include "bongocat.c"
+
+char wpm_str[4];
+
 
 /*
 static void render_logo(void) {
@@ -69,12 +73,28 @@ static void print_status_narrow(void) {
     oled_write_ln_P(PSTR("CPSLK"), led_usb_state.caps_lock);
 }
 
+static void render_wpm(void) {
+    uint8_t n = get_current_wpm();
+    wpm_str[3] = '\0';
+    wpm_str[2] = '0' + n % 10;
+    wpm_str[1] = '0' + (n /= 10) % 10;
+    wpm_str[0] = '0' + n / 10;
+    
+    oled_write_P(PSTR("\n\n\n\n"), false);
+    oled_write_P(PSTR("WPM:\n"), false);
+    oled_write(wpm_str, false);
+}
+
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     return OLED_ROTATION_270;
 }
 
 bool oled_task_user(void) {
-    print_status_narrow();
+    if (is_keyboard_master()) {
+        print_status_narrow();
+    } else {
+        render_wpm();
+    }
     return false;
 }
 

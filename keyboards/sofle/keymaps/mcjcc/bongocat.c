@@ -113,23 +113,23 @@ static void render_anim(void) {
 }
 
 
-bool oled_task_user(void) {
-	render_anim();
-    oled_set_cursor(0,0);
+// bool oled_task_user(void) {
+// 	render_anim();
+//     oled_set_cursor(0,0);
 
-    //  this was taking up too much memoryso i commented it out
-    //  sprintf(wpm_str, "WPM:%03d", get_current_wpm());
-    //  oled_write(wpm_str, false);
+//     //  this was taking up too much memoryso i commented it out
+//     //  sprintf(wpm_str, "WPM:%03d", get_current_wpm());
+//     //  oled_write(wpm_str, false);
 
-     return false;
-}
+//      return false;
+// }
 
-oled_rotation_t oled_init_user(oled_rotation_t rotation) { 
-    if (is_keyboard_master()) {
-        return rotation;
-    }
-    return OLED_ROTATION_180; 
-};
+// oled_rotation_t oled_init_user(oled_rotation_t rotation) { 
+//     if (is_keyboard_master()) {
+//         return rotation;
+//     }
+//     return OLED_ROTATION_180; 
+// };
 
 
 #endif
