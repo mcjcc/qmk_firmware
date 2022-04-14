@@ -75,7 +75,7 @@ for more options.
 #define SPLIT_LED_STATE_ENABLE
 
 #define COMBO_TERM 40
-#define COMBO_STRICT_TIMER
+// #define COMBO_STRICT_TIMER
 // #define COMBO_MUST_PRESS_IN_ORDER
 
 // #define OLED_FONT_WIDTH    6

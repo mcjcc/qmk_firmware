@@ -36,48 +36,15 @@ enum custom_layers {
 };
 
 enum combo_events {
-    L_PAREN,
-    R_PAREN,
-    L_CURLY,
-    R_CURLY,
-    L_SQ_BRACK,
-    R_SQ_BRACK,
-    EQUAL,
-    PLUS,
-    AMP,
-    PIPE,
-    CAPS,
     BSPC_LSFT_CLEAR,
     COMBO_LENGTH
 };
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
-const uint16_t PROGMEM left_paren[] = {KC_L, KC_P, COMBO_END};
-const uint16_t PROGMEM right_paren[] = {KC_R, KC_P, COMBO_END};
-const uint16_t PROGMEM left_curly[] = {KC_L, KC_C, COMBO_END};
-const uint16_t PROGMEM right_curly[] = {KC_R, KC_C, COMBO_END};
-const uint16_t PROGMEM left_square_brack[] = {KC_L, KC_S, COMBO_END};
-const uint16_t PROGMEM right_square_brack[] = {KC_R, KC_S, COMBO_END};
-const uint16_t PROGMEM equal[] = {KC_E, KC_Q, COMBO_END};
-const uint16_t PROGMEM plus[] = {KC_P, KC_L, KC_S, COMBO_END};
-const uint16_t PROGMEM amp[] = {KC_A, KC_M, KC_P, COMBO_END};
-const uint16_t PROGMEM pipe[] = {KC_O, KC_R, COMBO_END};
-const uint16_t PROGMEM caps[] = {KC_C, KC_A, KC_P, COMBO_END};
 const uint16_t PROGMEM clear_line_combo[] = {KC_BSPC, KC_LSFT, COMBO_END};
 
 
 combo_t key_combos[] = {
-    [L_PAREN] = COMBO(left_paren, KC_LPRN),
-    [R_PAREN] = COMBO(right_paren, KC_RPRN),
-    [L_CURLY] = COMBO(left_curly, KC_LCBR),
-    [R_CURLY] = COMBO(right_curly, KC_RCBR),
-    [L_SQ_BRACK] = COMBO(left_square_brack, KC_LBRC),
-    [R_SQ_BRACK] = COMBO(right_square_brack, KC_RBRC),
-    [EQUAL] = COMBO(equal, KC_EQL),
-    [PLUS] = COMBO(plus, KC_PLUS),
-    [AMP] = COMBO(amp, KC_AMPR),
-    [PIPE] = COMBO(pipe, KC_PIPE),
-    [CAPS] = COMBO(caps, KC_CAPS),
     [BSPC_LSFT_CLEAR] = COMBO_ACTION(clear_line_combo)
 };
 /* COMBO_ACTION(x) is same as COMBO(x, KC_NO) */
@@ -96,8 +63,6 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 
 uint16_t get_combo_term(uint16_t combo_index, combo_t *combo) {
     switch(combo_index) {
-        case L_PAREN:
-            return 30;
         case BSPC_LSFT_CLEAR:
             return 1000;
     }
@@ -149,7 +114,7 @@ KC_GRV, KC_1   , KC_2   , KC_3   , KC_4   , KC_5   ,                         KC_
 KC_TAB, KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   , KC_VOLU,       KC_PGUP, KC_Y    , KC_U   , KC_I   , KC_O   , KC_P   , KC_BSPC,
 KC_ESC, KC_A   , KC_S   , KC_D   , KC_F   , KC_G   , KC_MUTE,       KC_NO  , KC_H    , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOT,
 KC_LSFT, KC_Z  , KC_X   , KC_C   , KC_V   , KC_B   , KC_VOLD,       KC_PGDN, KC_N    , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,
-              KC_LCTRL, KC_LALT ,KC_LGUI,MO(_LOWER), KC_ENT ,       KC_ENT , MO(_RAISE),KC_SPC, KC_RALT, TO(0)
+              KC_LCTRL, KC_LALT ,KC_LGUI,MO(_LOWER), KC_ENT ,       KC_ENT , MO(_RAISE),KC_SPC, KC_RALT, KC_CAPS
 ),
 /*
  * COLEMAK - Vanilla
