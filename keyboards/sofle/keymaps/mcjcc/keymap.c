@@ -180,9 +180,9 @@ KC_LSFT, KC_Z  , KC_X   , KC_C   , KC_V   , KC_B   , KC_VOLD,       KC_PGDN, KC_
  */
 [_LOWER] = LAYOUT_via(
     CYCLE, _______, _______, _______, _______ , _______,                       _______, _______, KC_PSLS, KC_PAST , KC_PMNS , _______,
-  _______, XXXXXXX, KC_PSCR, KC_UP  , KC_LBRC , KC_RBRC, RGB_VAI,    KC_BRMU,  KC_PGUP, KC_7   , KC_8   , KC_9    , KC_PPLS , KC_DEL ,
-  _______, XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT , KC_CAPS, DEBUG  ,    RGB_TOG,  KC_PGDN, KC_4   , KC_5   , KC_6    , KC_EQL  , _______,
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX , KC_SPC , RGB_VAD,    KC_BRMD,  KC_LBRC, KC_1   , KC_2   , KC_3    , _______ , _______,
+  _______, XXXXXXX, KC_PSCR, KC_UP  , KC_LBRC , KC_RBRC, _______,    KC_BRMU,  KC_PGUP, KC_7   , KC_8   , KC_9    , KC_PPLS , KC_DEL ,
+  _______, XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT , KC_CAPS, _______,    RGB_TOG,  KC_PGDN, KC_4   , KC_5   , KC_6    , KC_EQL  , _______,
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX , KC_SPC , _______,    KC_BRMD,  KC_LBRC, KC_1   , KC_2   , KC_3    , _______ , _______,
                    _______, _______, _______, _______, _______,        _______, _______, KC_0, _______, _______
 ),
 
@@ -202,9 +202,9 @@ KC_LSFT, KC_Z  , KC_X   , KC_C   , KC_V   , KC_B   , KC_VOLD,       KC_PGDN, KC_
  */
 [_RAISE] = LAYOUT_via(
   KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  ,                         KC_F7  , KC_F8  , KC_F9  , KC_F10  , KC_F11  , KC_F12 ,
-  _______, KC_1   , KC_2   , KC_UP  , KC_4   , KC_5   , _______,       _______, KC_6   , KC_7   , KC_8    , KC_9    , KC_0   , KC_DEL,
+  _______, KC_1   , KC_2   , KC_UP  , KC_4   , KC_5   , RGB_VAI,       _______, KC_6   , KC_7   , KC_8    , KC_9    , KC_0   , KC_DEL,
   _______, KC_EXLM, KC_LEFT, KC_DOWN, KC_RGHT, KC_PERC, _______,       _______, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN  , KC_PIPE,
-  _______, KC_EQL , KC_MINS, KC_PLUS, KC_LCBR, KC_RCBR, _______,       _______, KC_LBRC, KC_RBRC, KC_SCLN, KC_COLN, KC_BSLS  , _______,
+  _______, KC_EQL , KC_MINS, KC_PLUS, KC_LCBR, KC_RCBR, RGB_VAD,       _______, KC_LBRC, KC_RBRC, KC_SCLN, KC_COLN, KC_BSLS  , _______,
                   _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______
 )
 };
