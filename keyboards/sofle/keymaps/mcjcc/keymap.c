@@ -180,9 +180,9 @@ KC_LSFT, KC_Z  , KC_X   , KC_C   , KC_V   , KC_B   , KC_VOLD,       KC_PGDN, KC_
  */
 [_LOWER] = LAYOUT_via(
     CYCLE, _______, _______, _______, _______ , _______,                       _______, _______, KC_PSLS, KC_PAST , KC_PMNS , _______,
-  _______, KC_INS , KC_PSCR, KC_APP , XXXXXXX , XXXXXXX, _______,    RGB_VAI,  KC_PGUP, KC_7   , KC_8   , KC_9    , KC_PPLS , KC_DEL ,
-  _______, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX , KC_CAPS, DEBUG  ,    RGB_TOG,  KC_PGDN, KC_4   , KC_5   , KC_6    , KC_EQL  , _______,
-  _______, KC_UNDO, KC_CUT , KC_COPY, XXXXXXX, KC_PASTE, _______,    RGB_VAD,  KC_LBRC, KC_1   , KC_2   , KC_3    , _______ , _______,
+  _______, XXXXXXX, KC_PSCR, KC_UP  , KC_LBRC , KC_RBRC, RGB_VAI,    KC_BRMU,  KC_PGUP, KC_7   , KC_8   , KC_9    , KC_PPLS , KC_DEL ,
+  _______, XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT , KC_CAPS, DEBUG  ,    RGB_TOG,  KC_PGDN, KC_4   , KC_5   , KC_6    , KC_EQL  , _______,
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX , KC_SPC , RGB_VAD,    KC_BRMD,  KC_LBRC, KC_1   , KC_2   , KC_3    , _______ , _______,
                    _______, _______, _______, _______, _______,        _______, _______, KC_0, _______, _______
 ),
 
@@ -202,7 +202,7 @@ KC_LSFT, KC_Z  , KC_X   , KC_C   , KC_V   , KC_B   , KC_VOLD,       KC_PGDN, KC_
  */
 [_RAISE] = LAYOUT_via(
   KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  ,                         KC_F7  , KC_F8  , KC_F9  , KC_F10  , KC_F11  , KC_F12 ,
-  _______, KC_1   , KC_2   , KC_UP  , KC_4   , KC_5   , _______,       _______, KC_6   , KC_7   , KC_8    , KC_9    , KC_0   , _______,
+  _______, KC_1   , KC_2   , KC_UP  , KC_4   , KC_5   , _______,       _______, KC_6   , KC_7   , KC_8    , KC_9    , KC_0   , KC_DEL,
   _______, KC_EXLM, KC_LEFT, KC_DOWN, KC_RGHT, KC_PERC, _______,       _______, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN  , KC_PIPE,
   _______, KC_EQL , KC_MINS, KC_PLUS, KC_LCBR, KC_RCBR, _______,       _______, KC_LBRC, KC_RBRC, KC_SCLN, KC_COLN, KC_BSLS  , _______,
                   _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______
@@ -243,8 +243,8 @@ void housekeeping_task_user(void) {
 #ifdef RGBLIGHT_ENABLE
 
 // per key LEDs
-// static uint8_t left_leds_sm[][2] = {{0, 3}, {5, 9}, {11, 12}, {14, 15}, {17, 24}, {26, 27}, {29, 35}};
-// static uint8_t right_leds_sm[][2] = {{38, 44}, {46, 47}, {49, 56}, {58, 59}, {61, 62}, {64, 68}, {70, 73}};
+// static uint8_t left_leds_sm[][2] = {{0,0}, {2,3}, {5, 9}, {11, 12}, {14, 15}, {17, 24}, {26, 27}, {29, 35}};
+// static uint8_t right_leds_sm[][2] = {{38, 44}, {46, 47}, {49, 56}, {58, 59}, {61, 62}, {64, 68}, {70, 71}, {73,73}};
 
 // underglow LEDS
 static uint8_t left_leds_underglow[] = {4, 16, 28, 1, 13, 25, 10};
@@ -256,16 +256,23 @@ static uint8_t right_thumb_led = 37;
 static led_t led_state;
 
 void apply_underglow(uint8_t *arr, size_t len, uint8_t hue, uint8_t sat, uint8_t val, void (*fnPtr)(uint8_t, uint8_t, uint8_t, uint8_t)) {
-     for(size_t i = 0; i < len; ++i) {
+    for(size_t i = 0; i < len; ++i) {
         fnPtr(hue, sat, val, arr[i]);
-     }             
+    }             
 };
+
+// lets keep brightness between layer changes
+void update_rgblight_val(HSV *color, uint8_t *val) {
+    color->v = *val;
+}
 
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof((a)[0]))
 
 
 void update_led(void) {
     HSV layer_color = rgblight_get_hsv();
+    uint8_t rgblight_value = layer_color.v;
+
     HSV indicator_color = layer_color;
 
     switch(get_highest_layer(layer_state)) {
@@ -276,10 +283,13 @@ void update_led(void) {
             layer_color = (HSV){hsv_GREEN};
             break;
         default:
-            layer_color = (HSV){hsv_PURP};
+            layer_color = (HSV){hsv_GOLD};
             break;
     }
-    indicator_color = (led_state.caps_lock) ? (HSV){hsv_ORANGE} : layer_color;
+    indicator_color = (led_state.caps_lock) ? (HSV){hsv_PURP} : layer_color;
+
+    update_rgblight_val(&layer_color, &rgblight_value);
+    update_rgblight_val(&indicator_color, &rgblight_value);
 
     uint8_t lh = layer_color.h;
     uint8_t ls = layer_color.s;
@@ -307,17 +317,24 @@ bool led_update_user(led_t state) {
     return true;
 }
 
-// void keyboard_post_init_user() {
+
+void keyboard_post_init_user() {
     // for (size_t i = 0; i < ARRAY_SIZE(left_leds_sm); ++i) {
-    //     rgblight_sethsv_range(hsv_GOLD, left_leds_sm[i][0], left_leds_sm[i][1]+1);
-    //     rgblight_sethsv_range(hsv_GOLD, right_leds_sm[i][0], right_leds_sm[i][1]+1);
+    //     rgblight_set_effect_range(left_leds_sm[i][0],left_leds_sm[i][1] - left_leds_sm[i][0] + 1);
+    //     rgblight_sethsv_noeeprom(hsv_PURP);
+
+    //     rgblight_set_effect_range(right_leds_sm[i][0],right_leds_sm[i][1] - right_leds_sm[i][0] + 1);
+    //     rgblight_sethsv_noeeprom(hsv_PURP);
+
+    //     // rgblight_sethsv_range(hsv_GOLD, left_leds_sm[i][0], left_leds_sm[i][1]+1);
+    //     // rgblight_sethsv_range(hsv_GOLD, right_leds_sm[i][0], right_leds_sm[i][1]+1);
     // }
 
     // apply_underglow(right_leds_underglow, ARRAY_SIZE(right_leds_underglow), hsv_PURP, rgblight_sethsv_at);
     // apply_underglow(left_leds_underglow, ARRAY_SIZE(left_leds_underglow), hsv_PURP, rgblight_sethsv_at);
     // rgblight_sethsv_range(hsv_PURP, left_thumb_led, right_thumb_led+1);
 
-// }
+}
 
 
 #endif

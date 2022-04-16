@@ -27,10 +27,10 @@ for more options.
 // #define RGBLIGHT_DEFAULT_MODE RGBLIGHT_MODE_RAINBOW_SWIRL+2
 
 // When flashed, this is the color that it defaults to (purplish)
-#define RGBLIGHT_DEFAULT_HUE 200 // about 264 degrees hue
-#define RGBLIGHT_DEFAULT_SAT 191 // about 75% saturation
-#define RGBLIGHT_DEFAULT_VAL RGBLIGHT_LIMIT_VAL // 150 and about 58% value
-#define RGBLIGHT_LAYERS_RETAIN_VAL
+#define RGBLIGHT_DEFAULT_HUE 40 
+#define RGBLIGHT_DEFAULT_SAT 230 
+#define RGBLIGHT_DEFAULT_VAL RGBLIGHT_LIMIT_VAL 
+// #define RGBLIGHT_LAYERS_RETAIN_VAL // I think this only works if RGBLIGHT_LAYERS is defined
 
 // colors
 #define hsv_PURP              200, 191, RGBLIGHT_DEFAULT_VAL
