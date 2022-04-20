@@ -111,9 +111,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_QWERTY] = LAYOUT_via(
 KC_GRV, KC_1   , KC_2   , KC_3   , KC_4   , KC_5   ,                         KC_6    , KC_7   , KC_8   , KC_9   , KC_0   , KC_MINS,
-KC_TAB, KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   , KC_VOLU,       KC_PGUP, KC_Y    , KC_U   , KC_I   , KC_O   , KC_P   , KC_BSPC,
+KC_TAB, KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   , KC_VOLU,       KC_BRMD, KC_Y    , KC_U   , KC_I   , KC_O   , KC_P   , KC_BSPC,
 KC_ESC, KC_A   , KC_S   , KC_D   , KC_F   , KC_G   , KC_MUTE,       KC_NO  , KC_H    , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOT,
-KC_LSFT, KC_Z  , KC_X   , KC_C   , KC_V   , KC_B   , KC_VOLD,       KC_PGDN, KC_N    , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,
+KC_LSFT, KC_Z  , KC_X   , KC_C   , KC_V   , KC_B   , KC_VOLD,       KC_BRMU, KC_N    , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,
               KC_LCTRL, KC_LALT ,KC_LGUI,MO(_LOWER), KC_ENT ,       KC_ENT , MO(_RAISE),KC_SPC, KC_RGUI, KC_CAPS
 ),
 /*
@@ -158,9 +158,9 @@ KC_LSFT, KC_Z  , KC_X   , KC_C   , KC_V   , KC_B   , KC_VOLD,       KC_PGDN, KC_
  */
 [_COLEMAK] = LAYOUT_via(
   KC_GRV , KC_1   , KC_2   , KC_3   , KC_4   , KC_5   ,                          KC_6    , KC_7   , KC_8   , KC_9   , KC_0   , KC_MINS ,
-  KC_TAB , KC_Q   , KC_W   , KC_F   , KC_P   , KC_B   , KC_VOLU,       KC_PGUP,  KC_J    , KC_L   , KC_U   , KC_Y   , KC_SCLN, KC_BSPC,
+  KC_TAB , KC_Q   , KC_W   , KC_F   , KC_P   , KC_B   , KC_VOLU,       KC_BRMD,  KC_J    , KC_L   , KC_U   , KC_Y   , KC_SCLN, KC_BSPC,
   KC_ESC , KC_A   , KC_R   , KC_S   , KC_T   , KC_G   , KC_MUTE,       XXXXXXX,  KC_M    , KC_N   , KC_E   , KC_I   , KC_O   , KC_QUOT,
-  KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_D   , KC_V   , KC_VOLD,       KC_PGDN,  KC_K    , KC_H   , KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT,
+  KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_D   , KC_V   , KC_VOLD,       KC_BRMU,  KC_K    , KC_H   , KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT,
                   KC_LCTRL, KC_LALT ,KC_LGUI,MO(_LOWER), KC_ENT,       KC_ENT ,MO(_RAISE),KC_SPC  , KC_RGUI, KC_CAPS
 ),
 
@@ -180,9 +180,9 @@ KC_LSFT, KC_Z  , KC_X   , KC_C   , KC_V   , KC_B   , KC_VOLD,       KC_PGDN, KC_
  */
 [_LOWER] = LAYOUT_via(
     CYCLE, _______, _______, _______, _______ , _______,                       _______, _______, KC_PSLS, KC_PAST , KC_PMNS , _______,
-  _______, XXXXXXX, XXXXXXX, KC_PGUP, KC_PGDN , XXXXXXX, _______,    KC_BRMU,  KC_PGUP, KC_7   , KC_8   , KC_9    , KC_PPLS , KC_DEL ,
+  _______, XXXXXXX, XXXXXXX, KC_PGUP, KC_PGDN , XXXXXXX, _______,    RGB_VAD,  KC_PGUP, KC_7   , KC_8   , KC_9    , KC_PPLS , KC_DEL ,
   _______, XXXXXXX, KC_LEFT, KC_UP  , KC_DOWN , KC_RGHT, _______,    RGB_TOG,  KC_PGDN, KC_4   , KC_5   , KC_6    , KC_EQL  , _______,
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX , KC_SPC , _______,    KC_BRMD,  KC_LBRC, KC_1   , KC_2   , KC_3    , _______ , _______,
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX , KC_SPC , _______,    RGB_VAI,  KC_LBRC, KC_1   , KC_2   , KC_3    , _______ , _______,
                    _______, _______, _______, _______, _______,        _______, _______, KC_0, _______, _______
 ),
 
@@ -202,9 +202,9 @@ KC_LSFT, KC_Z  , KC_X   , KC_C   , KC_V   , KC_B   , KC_VOLD,       KC_PGDN, KC_
  */
 [_RAISE] = LAYOUT_via(
   KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  ,                         KC_F7  , KC_F8  , KC_F9  , KC_F10  , KC_F11  , KC_F12 ,
-  _______, KC_EXLM, KC_AT  , KC_HASH, KC_DLR , KC_PERC, RGB_VAI,       _______, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN , KC_RPRN , KC_DEL ,
+  _______, KC_EXLM, KC_AT  , KC_HASH, KC_DLR , KC_PERC, _______,       _______, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN , KC_RPRN , KC_DEL ,
   _______, XXXXXXX, KC_LEFT, KC_UP  , KC_DOWN, KC_RGHT, _______,       _______, KC_LEFT, KC_DOWN, KC_UP , KC_RGHT , KC_RPRN , KC_PIPE,
-  _______, KC_EQL , KC_MINS, KC_PLUS, KC_LCBR, KC_RCBR, RGB_VAD,       _______, KC_LBRC, KC_RBRC, KC_SCLN, KC_COLN, KC_BSLS  , _______,
+  _______, KC_EQL , KC_MINS, KC_PLUS, KC_LCBR, KC_RCBR, _______,       _______, KC_LBRC, KC_RBRC, KC_SCLN, KC_COLN, KC_BSLS  , _______,
                   _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______
 )
 };
