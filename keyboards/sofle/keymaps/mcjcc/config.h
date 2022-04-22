@@ -57,7 +57,7 @@ for more options.
 #define NO_ACTION_ONESHOT  // 332
 #define NO_ACTION_MACRO    // 0
 #define NO_ACTION_FUNCTION // 0
-#define DISABLE_LEADER     // 0
+// #define DISABLE_LEADER     // 0
 
 #define OLED_FONT_H "./keymaps/mcjcc/glcdfont.c"
 
